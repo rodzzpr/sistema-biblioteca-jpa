@@ -16,6 +16,18 @@ public class Main {
         EntityManager em = emf.createEntityManager();
 
         try {
+            // Verificación de conexión
+            try {
+                em.getTransaction().begin();
+                Object one = em.createNativeQuery("SELECT 1").getSingleResult();
+                em.getTransaction().commit();
+                System.out.println("Conexión OK: " + one);
+            } catch (Exception e) {
+                if (em.getTransaction().isActive()) em.getTransaction().rollback();
+                System.err.println("Error de conexión: " + e.getMessage());
+                return; // corta aquí si no hay conexión
+            }
+
             em.getTransaction().begin();
 
             // 1) Crear categorías (se persisten explícitamente)
