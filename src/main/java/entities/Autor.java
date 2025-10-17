@@ -9,21 +9,17 @@ import java.util.Objects;
 @Entity
 public class Autor {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
-
     private String nacionalidad;
-
     private LocalDate fechaNacimiento;
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Libro> libros = new ArrayList<>();
 
     public Autor() {}
-
     public Autor(String nombre, String nacionalidad, LocalDate fechaNacimiento) {
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;
@@ -31,10 +27,8 @@ public class Autor {
     }
 
     // helper
-    public void agregarLibro(Libro libro) {
-        libros.add(libro);
-        libro.setAutor(this);
-    }
+    public void agregarLibro(Libro l){ libros.add(l); l.setAutor(this); }
+    public void quitarLibro(Libro l){ libros.remove(l); l.setAutor(null); }
 
     // getters/setters
     public Long getId() { return id; }
@@ -46,13 +40,6 @@ public class Autor {
     public void setFechaNacimiento(LocalDate fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }
     public List<Libro> getLibros() { return libros; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Autor)) return false;
-        Autor other = (Autor) o;
-        return id != null && id.equals(other.id);
-    }
-    @Override
-    public int hashCode() { return Objects.hashCode(id); }
+    @Override public boolean equals(Object o){ return o instanceof Autor a && id!=null && id.equals(a.id); }
+    @Override public int hashCode(){ return Objects.hashCode(id); }
 }
