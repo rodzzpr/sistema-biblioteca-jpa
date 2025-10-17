@@ -3,6 +3,11 @@
     <persistence-unit name="biblioPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+        <!-- Lista explícita de entidades -->
+        <class>entities.Autor</class>
+        <class>entities.Libro</class>
+        <class>entities.Categoria</class>
+
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
         <properties>
@@ -18,7 +23,7 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.highlight_sql" value="true"/>
 
-            <!-- 🔒 Desactiva Bean Validation por completo (evita EL) -->
+            <!-- Desactiva Bean Validation (evita EL) -->
             <property name="jakarta.persistence.validation.mode" value="none"/>
         </properties>
     </persistence-unit>
