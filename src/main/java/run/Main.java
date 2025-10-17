@@ -57,7 +57,8 @@ public class Main {
                             "ORDER BY l.titulo", Libro.class
             ).getResultList();
 
-            System.out.println("\n=== LIBROS, AUTORES Y CATEGORÍAS ===");
+            // print
+	    System.out.println("\n=== LIBROS, AUTORES Y CATEGORÍAS ===");
             for (Libro l : resultados) {
                 String cats = l.getCategorias().stream()
                         .map(Categoria::getNombre)
